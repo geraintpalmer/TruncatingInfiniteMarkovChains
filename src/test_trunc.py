@@ -298,3 +298,33 @@ def test_make_gamblers_ruin_matrix():
         bound=6
     )
     assert np.allclose(P, expected_P)
+
+
+def test_make_random_walk_matrix():
+    """
+    With p=0.2, and a boundary of 6, we should get:
+
+    P = (
+    (1.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+    (0.8, 0.0, 0.2, 0.0, 0.0, 0.0),
+    (0.0, 0.8, 0.0, 0.2, 0.0, 0.0),
+    (0.0, 0.0, 0.8, 0.0, 0.2, 0.0),
+    (0.0, 0.0, 0.0, 0.8, 0.0, 0.2),
+    (0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+    )
+    """
+    expected_P = np.array(
+        [
+            [1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [0.8, 0.0, 0.2, 0.0, 0.0, 0.0],
+            [0.0, 0.8, 0.0, 0.2, 0.0, 0.0],
+            [0.0, 0.0, 0.8, 0.0, 0.2, 0.0],
+            [0.0, 0.0, 0.0, 0.8, 0.0, 0.2],
+            [0.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+        ]
+    )
+    P = trunc.make_random_walk_matrix(
+        prob_step_away=0.2,
+        bound=6
+    )
+    assert np.allclose(P, expected_P)

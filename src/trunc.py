@@ -134,3 +134,18 @@ def make_gamblers_ruin_matrix(winning_prob, bound):
                 if s2 == bound - 1 and s1 in [bound-2, bound-1]:
                     transition_matrix[s1, s2] = winning_prob
     return transition_matrix
+
+def make_random_walk_matrix(prob_step_away, bound):
+    """
+    Makes the transition matrix for an absorbing random walk:
+      - Take a step away from the origin with probability `prob_going_away`
+      - Take a step closer to the origin with probability 1 - `prob_going_away`
+      - Stop once you return to the origin.
+    """
+    transition_matrix = np.zeros((bound, bound))
+    transition_matrix[0, 0] = 1
+    for s in range(1, bound - 1):
+        transition_matrix[s, s-1] = 1 - prob_step_away
+        transition_matrix[s, s+1] = prob_step_away
+    transition_matrix[-1][-2] = 1
+    return transition_matrix
